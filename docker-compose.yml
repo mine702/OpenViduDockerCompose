@@ -2,7 +2,7 @@ version: "3"
 services:
   nginx:
     restart: always
-    image: mine0702/openvidu-nginx
+    image: nginx
     container_name: app_nginx
     ports:
       - "80:80"
