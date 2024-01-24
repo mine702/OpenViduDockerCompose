@@ -1,0 +1,67 @@
+version: "3"
+services:
+  nginx:
+    restart: always
+    image: mine0702/openvidu_nginx
+    container_name: app_nginx
+    ports:
+      - "80:80"
+      - "443:443" # HTTPS 포트 추가
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - frontend
+      - backend
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - /letsencrypt/certbot/conf:/etc/letsencrypt
+      - /letsencrypt/certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  frontend:
+    image: mine0702/docker-openvidu-vue
+    container_name: app_frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    stdin_open: true
+    mem_limit: 128m
+
+  backend:
+    image: mine0702/openvidu-basic-java
+    container_name: app_backend
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    stdin_open: true
+    mem_limit: 128m
+
+  openvidu-server:
+    image: openvidu/openvidu-server-kms:2.29.0
+    container_name: openvidu-server
+    ports:
+      - "4443:4443"
+    environment:
+      - KMS_URIS=[\"ws://kms:8888/kurento\"]
+      - OPENVIDU_SECRET=MY_SECRET
+      - OPENVIDU_CDR=false
+      - OPENVIDU_RECORDING=false
+      - OPENVIDU_WEBHOOK=false
+    depends_on:
+      - kms
+
+  kms:
+    image: kurento/kurento-media-server:6.16.0
+    container_name: kms
+    ports:
+      - "8888:8888"
+    environment:
+      - KMS_MIN_PORT=40000
+      - KMS_MAX_PORT=65535
