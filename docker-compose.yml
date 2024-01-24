@@ -2,7 +2,7 @@ version: "3"
 services:
   nginx:
     restart: always
-    image: nginx
+    image: mine0702/openvidu-nginx
     container_name: app_nginx
     ports:
       - "80:80"
@@ -28,8 +28,6 @@ services:
   frontend:
     image: mine0702/docker-openvidu-vue
     container_name: app_frontend
-    ports:
-      - "3000:3000"
     volumes:
       - /app/node_modules
       - ./frontend:/app
@@ -39,8 +37,6 @@ services:
   backend:
     image: mine0702/openvidu-basic-java
     container_name: app_backend
-    ports:
-      - "8080:8080"
     volumes:
       - /app/node_modules
       - ./backend_data:/app/data
