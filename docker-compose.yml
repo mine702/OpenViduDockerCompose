@@ -29,7 +29,7 @@ services:
     image: mine0702/docker-openvidu-vue
     container_name: app_frontend
     ports:
-      - "5000:5000"
+      - "3000:3000"
     volumes:
       - /app/node_modules
       - ./frontend:/app
