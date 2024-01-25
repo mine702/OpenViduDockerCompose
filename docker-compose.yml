@@ -5,9 +5,10 @@ services:
     container_name: nginx-proxy-manager
     restart: always
     ports:
-      - 80
-      - 81
-      - 443
+      - "80:80"
+      - "81:81"
+      - "443:443"
+
     volumes:
       - /docker/nginx-proxy-manager/data:/data
       - /docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
