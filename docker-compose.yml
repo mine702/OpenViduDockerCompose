@@ -25,17 +25,17 @@ services:
       - nginx
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
-  openvidu-server:
-    image: openvidu/openvidu-server-kms:latest
-    environment:
-      - OPENVIDU_SECRET=633ehddbs
-      - DOMAIN_OR_PUBLIC_IP=www.beevarium.site
-      - KMS_URIS=["ws://kms:8888/kurento"]
+  # openvidu-server:
+  #   image: openvidu/openvidu-server-kms:latest
+  #   environment:
+  #     - OPENVIDU_SECRET=633ehddbs
+  #     - DOMAIN_OR_PUBLIC_IP=www.beevarium.site
+  #     - KMS_URIS=["ws://kms:8888/kurento"]
 
-  kms:
-    image: kurento/kurento-media-server:latest
-    ports:
-      - "8888:8888"
+  # kms:
+  #   image: kurento/kurento-media-server:latest
+  #   ports:
+  #     - "8888:8888"
 
   frontend:
     image: mine0702/openvidu-frontend
