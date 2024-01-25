@@ -40,6 +40,8 @@ services:
   frontend:
     image: mine0702/openvidu-frontend
     container_name: app_frontend
+    ports:
+      - 3000:3000
     # volumes:
     #   - /app/node_modules
     #   - ./frontend:/app
@@ -49,6 +51,8 @@ services:
   backend:
     image: mine0702/openvidu-backend
     container_name: app_backend
+    ports:
+      - 8080:8080
     # volumes:
     #   - /app/node_modules
     #   - ./backend:/app
