@@ -45,7 +45,7 @@ services:
     # volumes:
     #   - /app/node_modules
     #   - ./frontend:/app
-    stdin_open: true
+    # stdin_open: true
     mem_limit: 128m
 
   backend:
@@ -56,5 +56,5 @@ services:
     # volumes:
     #   - /app/node_modules
     #   - ./backend:/app
-    stdin_open: true
+    # stdin_open: true
     mem_limit: 128m
