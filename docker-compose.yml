@@ -46,7 +46,7 @@ services:
     #   - /app/node_modules
     #   - ./frontend:/app
     # stdin_open: true
-    mem_limit: 128m
+    mem_limit: 512m
 
   backend:
     image: mine0702/openvidu-backend
@@ -57,4 +57,4 @@ services:
     #   - /app/node_modules
     #   - ./backend:/app
     # stdin_open: true
-    mem_limit: 128m
+    mem_limit: 512m
