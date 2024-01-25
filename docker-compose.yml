@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3"
 services:
   nginx:
     restart: always
@@ -40,17 +40,17 @@ services:
   frontend:
     image: mine0702/openvidu-frontend
     container_name: app_frontend
-    volumes:
-      - /app/node_modules
-      - ./frontend:/app
+    # volumes:
+    #   - /app/node_modules
+    #   - ./frontend:/app
     stdin_open: true
     mem_limit: 128m
 
   backend:
     image: mine0702/openvidu-backend
     container_name: app_backend
-    volumes:
-      - /app/node_modules
-      - ./backend:/app
+    # volumes:
+    #   - /app/node_modules
+    #   - ./backend:/app
     stdin_open: true
     mem_limit: 128m
