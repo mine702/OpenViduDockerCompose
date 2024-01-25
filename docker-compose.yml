@@ -10,3 +10,19 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+
+  frontend:
+    image: mine0702/openvidu-frontend
+    ports:
+      - "3000:3000"
+    container_name: app_frontend
+    stdin_open: true
+    mem_limit: 512m
+
+  backend:
+    image: mine0702/openvidu-backend
+    ports:
+      - "8080:8080"
+    container_name: app_backend
+    stdin_open: true
+    mem_limit: 512m
