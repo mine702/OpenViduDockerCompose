@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.1"
 services:
   app:
     image: "jc21/nginx-proxy-manager:latest"
@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
     environment:
       - OPENVIDU_SECRET=633ehddbs
-      - DOMAIN_OR_PUBLIC_IP=openvidu.beevarium.site
+      - DOMAIN_OR_PUBLIC_IP=https://openvidu.beevarium.site
       - KMS_URIS=["ws://kms:8888/kurento"]
     ports:
       - "4443:4443"
