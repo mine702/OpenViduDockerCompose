@@ -48,6 +48,7 @@ services:
 
   kms:
     image: kurento/kurento-media-server:latest
+    restart: unless-stopped
     ports:
       - "8888:8888"
     expose:
