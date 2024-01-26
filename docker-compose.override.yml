@@ -1,0 +1,78 @@
+version: "3.1"
+services:
+  app:
+    image: "jc21/nginx-proxy-manager:latest"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "60081:81"
+      - "443:443"
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  db:
+    image: "jc21/mariadb-aria:latest"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "npm"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm"
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  openvidu-server:
+    image: openvidu/openvidu-server-kms:latest
+    restart: unless-stopped
+    environment:
+      - OPENVIDU_SECRET=633ehddbs
+      - DOMAIN_OR_PUBLIC_IP=https://openvidu.beevarium.site
+      - KMS_URIS=["ws://kms:8888/kurento"]
+    ports:
+      - "4443:4443"
+    expose:
+      - 4443
+
+  kms:
+    image: kurento/kurento-media-server:latest
+    restart: unless-stopped
+    ports:
+      - "8888:8888"
+    expose:
+      - 8888
+
+  frontend:
+    image: mine0702/openvidu-frontend
+    restart: unless-stopped
+    container_name: app_frontend
+    expose:
+      - "3000"
+    stdin_open: true
+    mem_limit: 512m
+
+  backend:
+    image: mine0702/openvidu-backend
+    restart: unless-stopped
+    container_name: app_backend
+    stdin_open: true
+    expose:
+      - "8080" # 백엔드 서비스가 사용하는 포트, 외부에 노출하지 않음
+    mem_limit: 512m
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
