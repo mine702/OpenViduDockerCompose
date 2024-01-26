@@ -34,26 +34,6 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
 
-  openvidu-server:
-    image: openvidu/openvidu-server-kms:latest
-    restart: unless-stopped
-    environment:
-      - OPENVIDU_SECRET=633ehddbs
-      - DOMAIN_OR_PUBLIC_IP=openvidu.beevarium.site
-      - KMS_URIS=["ws://kms:8888/kurento"]
-    ports:
-      - "4443:4443"
-    expose:
-      - 4443
-
-  kms:
-    image: kurento/kurento-media-server:latest
-    restart: unless-stopped
-    ports:
-      - "8888:8888"
-    expose:
-      - 8888
-
   frontend:
     image: mine0702/openvidu-frontend
     restart: unless-stopped
