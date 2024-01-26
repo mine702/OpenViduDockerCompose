@@ -40,7 +40,7 @@ services:
     environment:
       - OPENVIDU_SECRET=633ehddbs
       - DOMAIN_OR_PUBLIC_IP=beevarium.site
-      - KMS_URIS=["ws://kms:8888/kurento"]
+      - KMS_URIS=["wss://kms:8888/kurento"]
     ports:
       - "4443:4443"
     expose:
