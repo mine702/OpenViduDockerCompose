@@ -41,7 +41,7 @@ services:
     expose:
       - "3000"
     stdin_open: true
-    mem_limit: 512m
+    # mem_limit: 1024m
 
   backend:
     image: mine0702/openvidu-backend
@@ -50,7 +50,7 @@ services:
     stdin_open: true
     expose:
       - "8080" # 백엔드 서비스가 사용하는 포트, 외부에 노출하지 않음
-    mem_limit: 512m
+    # mem_limit: 1024m
 # networks:
 #   default:
 #     external:
